@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MockTestBazaar - AI Mock Tests for Indian Exams</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#F4F6FF;color:#0A0A1A;min-height:100vh}
+.ticker{background:#1A3AFF;color:#fff;font-size:13px;padding:8px 0;overflow:hidden;white-space:nowrap}
+.ticker span{display:inline-block;animation:tick 30s linear infinite}
+@keyframes tick{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+nav{background:#fff;border-bottom:1px solid #C5D0FF;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99}
+.logo{font-family:'Syne',sans-serif;font-size:20px;color:#1A3AFF}.logo b{color:#0A0A1A}
+.nbadge{background:#EEF1FF;color:#1A3AFF;border:1px solid #C5D0FF;border-radius:20px;padding:5px 14px;font-size:12px}
+.hero{padding:36px 20px 20px;max-width:720px;margin:0 auto;text-align:center}
+.htag{display:inline-block;background:#E6F5EC;color:#1A7A3C;border:1px solid #A3D9B5;border-radius:20px;padding:5px 16px;font-size:12px;margin-bottom:14px}
+h1{font-family:'Syne',sans-serif;font-size:clamp(22px,5vw,42px);line-height:1.1;margin-bottom:12px}
+h1 em{color:#1A3AFF;font-style:normal}
+.hsub{font-size:15px;color:#3A3A5A;line-height:1.6;margin-bottom:20px}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:720px;margin:0 auto 24px;padding:0 20px}
+.scard{background:#fff;border:1px solid #C5D0FF;border-radius:12px;padding:12px;text-align:center}
+.snum{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#1A3AFF}
+.slbl{font-size:10px;color:#3A3A5A;margin-top:2px}
+.elabel{font-size:11px;font-weight:500;color:#3A3A5A;letter-spacing:.4px;text-transform:uppercase;margin-bottom:12px;max-width:720px;margin-left:auto;margin-right:auto;padding:0 20px;display:block}
+.exam-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:720px;margin:0 auto 24px;padding:0 20px}
+.ecard{background:#fff;border:2px solid #C5D0FF;border-radius:16px;padding:16px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;transition:border-color .15s}
+.ecard.on{border-color:#1A3AFF;background:#EEF1FF}
+.eicon{font-size:24px;margin-bottom:6px}
+.ename{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#0A0A1A;margin-bottom:2px}
+.edesc{font-size:11px;color:#3A3A5A}
+.ebadge{display:inline-block;background:#FFF0E6;color:#FF6B00;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:500;margin-top:4px}
+.ccard{background:#fff;border:1px solid #C5D0FF;border-radius:20px;max-width:720px;margin:0 auto 24px;overflow:hidden}
+.chdr{background:#1A3AFF;padding:16px 20px;color:#fff}
+.ctitle{font-family:'Syne',sans-serif;font-size:16px;font-weight:800}
+.csub{font-size:12px;opacity:.8;margin-top:2px}
+.cbody{padding:20px}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.clbl{font-size:11px;font-weight:500;color:#3A3A5A;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px}
+select,input{width:100%;border:1.5px solid #C5D0FF;border-radius:10px;padding:11px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#0A0A1A;background:#fff;-webkit-appearance:none}
+select:focus,input:focus{border-color:#1A3AFF}
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
+.pcard{border:2px solid #C5D0FF;border-radius:12px;padding:14px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;background:#fff}
+.pcard.on{border-color:#1A3AFF;background:#EEF1FF}
+.pcard.hot{border-color:#FF6B00}
+.pbadge{font-size:10px;background:#FF6B00;color:#fff;border-radius:20px;padding:2px 8px;margin-bottom:6px;display:inline-block}
+.pname{font-size:12px;font-weight:500;color:#3A3A5A;margin-bottom:4px}
+.pprice{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1A7A3C}
+.pold{font-size:11px;text-decoration:line-through;color:#AAA}
+.pqs{font-size:11px;color:#3A3A5A;margin-top:3px}
+.prorow{display:flex;gap:8px;margin-bottom:14px}
+.proinp{flex:1;border:1.5px solid #C5D0FF;border-radius:10px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;color:#0A0A1A;background:#fff;text-transform:uppercase}
+.proinp:focus{border-color:#1A3AFF}
+.probtn{padding:10px 18px;background:#1A3AFF;color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;white-space:nowrap}
+.promsg{font-size:12px;margin-bottom:10px;padding:8px 12px;border-radius:8px;display:none}
+.promsg.ok{background:#E6F5EC;color:#1A7A3C;display:block}
+.promsg.err{background:#FDECEA;color:#C0392B;display:block}
+.sbtn{display:block;width:100%;padding:15px;background:#1A3AFF;color:#fff;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;text-align:center}
+.sbtn:disabled{background:#CCC;cursor:not-allowed}
+.tscreen{display:none;max-width:720px;margin:0 auto;padding:0 20px 40px}
+.thdr{background:#fff;border:1px solid #C5D0FF;border-radius:16px;padding:16px 20px;margin-bottom:16px}
+.tmeta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.ttitle{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:#0A0A1A}
+.tbox{background:#EEF1FF;color:#1A3AFF;border:1px solid #C5D0FF;border-radius:8px;padding:6px 14px;font-family:'Syne',sans-serif;font-size:16px;font-weight:800}
+.tbox.warn{background:#FDECEA;color:#C0392B;border-color:#C0392B}
+.pbar{height:6px;background:#C5D0FF;border-radius:3px;margin-top:12px}
+.pfill{height:6px;background:#1A3AFF;border-radius:3px;transition:width .3s}
+.qcard{background:#fff;border:1px solid #C5D0FF;border-radius:16px;padding:20px;margin-bottom:14px}
+.qnum{font-size:11px;font-weight:500;color:#3A3A5A;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.qtxt{font-size:15px;line-height:1.6;color:#0A0A1A;margin-bottom:16px;font-weight:500}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid #C5D0FF;border-radius:10px;padding:12px 16px;font-size:14px;color:#3A3A5A;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;background:#fff;display:flex;align-items:center;gap:10px}
+.opt.sel{border-color:#1A3AFF;background:#EEF1FF;color:#0A0A1A}
+.opt.ok{border-color:#1A7A3C;background:#E6F5EC;color:#1A7A3C}
+.opt.no{border-color:#C0392B;background:#FDECEA;color:#C0392B}
+.olet{width:24px;height:24px;border-radius:50%;background:#C5D0FF;color:#0A0A1A;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.opt.sel .olet{background:#1A3AFF;color:#fff}
+.opt.ok .olet{background:#1A7A3C;color:#fff}
+.opt.no .olet{background:#C0392B;color:#fff}
+.navgrid{background:#fff;border:1px solid #C5D0FF;border-radius:16px;padding:16px 20px;margin-bottom:14px}
+.navtitle{font-size:12px;font-weight:500;color:#3A3A5A;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px}
+.dots{display:flex;flex-wrap:wrap;gap:6px}
+.dot{width:32px;height:32px;border-radius:8px;border:1.5px solid #C5D0FF;background:#fff;color:#3A3A5A;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.dot.ans{background:#1A3AFF;color:#fff;border-color:#1A3AFF}
+.dot.cur{border-color:#FF6B00;color:#FF6B00}
+.dot.ans.cur{background:#FF6B00;border-color:#FF6B00;color:#fff}
+.expbox{background:#E6F5EC;border:1px solid #A3D9B5;border-radius:10px;padding:12px 16px;margin-top:12px;font-size:13px;color:#1A7A3C;line-height:1.6;display:none}
+.expbox.show{display:block}
+.exptitle{font-weight:600;margin-bottom:4px}
+.qnav{display:flex;gap:10px;margin-top:14px}
+.nbtn{flex:1;padding:12px;border:2px solid #C5D0FF;border-radius:10px;background:#fff;color:#3A3A5A;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.nbtn.pri{background:#1A3AFF;color:#fff;border-color:#1A3AFF}
+.nbtn.dan{background:#C0392B;color:#fff;border-color:#C0392B}
+.nbtn:disabled{opacity:.4;cursor:not-allowed}
+.rscreen{display:none;max-width:720px;margin:0 auto;padding:0 20px 40px}
+.rhero{background:#1A3AFF;border-radius:20px;padding:28px 24px;text-align:center;color:#fff;margin-bottom:16px}
+.rscore{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;line-height:1}
+.rtotal{font-size:18px;opacity:.8;margin-bottom:12px}
+.rgrade{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px}
+.rmsg{font-size:14px;opacity:.8}
+.rstats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.rcard{background:#fff;border:1px solid #C5D0FF;border-radius:12px;padding:14px;text-align:center}
+.rnum{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}
+.rnum.g{color:#1A7A3C}.rnum.r{color:#C0392B}.rnum.b{color:#1A3AFF}.rnum.o{color:#FF6B00}
+.rlbl{font-size:11px;color:#3A3A5A;margin-top:2px}
+.abtns{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.abtn{flex:1;padding:14px;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;text-align:center;min-width:120px}
+.abtn.blue{background:#1A3AFF;color:#fff}
+.abtn.green{background:#1A7A3C;color:#fff}
+.abtn.out{background:#fff;color:#0A0A1A;border:2px solid #C5D0FF}
+.revcard{background:#fff;border:1px solid #C5D0FF;border-radius:16px;padding:18px 20px;margin-bottom:12px}
+.revq{font-size:14px;font-weight:500;color:#0A0A1A;margin-bottom:10px;line-height:1.5}
+.revopt{font-size:13px;padding:8px 12px;border-radius:8px;margin-bottom:6px}
+.revopt.ok{background:#E6F5EC;color:#1A7A3C}
+.revopt.no{background:#FDECEA;color:#C0392B}
+.revopt.neu{background:#EEF1FF;color:#1A3AFF}
+.revexp{font-size:13px;color:#3A3A5A;line-height:1.6;margin-top:8px;padding-top:8px;border-top:1px solid #C5D0FF}
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;align-items:center;justify-content:center;padding:20px}
+.mbg.show{display:flex}
+.mbox{background:#fff;border-radius:20px;padding:28px 22px;max-width:380px;width:100%;text-align:center}
+.mbox h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:8px}
+.mbox p{font-size:14px;color:#3A3A5A;line-height:1.6;margin-bottom:16px}
+.mbtns{display:flex;gap:10px;margin-bottom:10px}
+.mbtn{flex:1;padding:13px;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.mbtn.blue{background:#1A3AFF;color:#fff}
+.mbtn.out{background:#fff;border:1.5px solid #C5D0FF;color:#3A3A5A;font-family:'DM Sans',sans-serif;font-size:14px;padding:10px 24px}
+.loverlay{display:none;position:fixed;inset:0;background:rgba(10,10,26,.75);z-index:300;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.loverlay.show{display:flex}
+.spin{width:48px;height:48px;border:4px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ltxt{color:#fff;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;text-align:center;padding:0 20px}
+.lsub{color:rgba(255,255,255,.7);font-size:13px;text-align:center;padding:0 20px}
+footer{text-align:center;padding:24px 20px;font-size:12px;color:#8A8AAA;line-height:1.8}
+@media(max-width:480px){.sgrid{grid-template-columns:repeat(2,1fr)}.rstats{grid-template-columns:repeat(2,1fr)}.crow{grid-template-columns:1fr}.abtns{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="ticker"><span>AI Mock Tests for UPSC CA NEET JEE SSC Railway &nbsp;&nbsp;&nbsp; PYQ style questions &nbsp;&nbsp;&nbsp; Fresh every attempt &nbsp;&nbsp;&nbsp; 3 questions FREE &nbsp;&nbsp;&nbsp;</span></div>
+
+<nav>
+  <div class="logo">MockTest<b>Bazaar</b></div>
+  <div class="nbadge">AI Powered</div>
+</nav>
+
+<div id="hs">
+  <div class="hero">
+    <div class="htag">India's Smartest Mock Test Platform</div>
+    <h1>AI Mock Tests for<br><em>Your Exact Exam</em></h1>
+    <p class="hsub">Select your exam, choose your topic, start your test. Instant results with detailed explanations. Just like the real exam.</p>
+  </div>
+
+  <div class="sgrid">
+    <div class="scard"><div class="snum">10K+</div><div class="slbl">Tests Taken</div></div>
+    <div class="scard"><div class="snum">8 Exams</div><div class="slbl">Covered</div></div>
+    <div class="scard"><div class="snum">Rs.49</div><div class="slbl">Full Test</div></div>
+    <div class="scard"><div class="snum">Instant</div><div class="slbl">Results</div></div>
+  </div>
+
+  <span class="elabel">Select Your Exam</span>
+
+  <div class="exam-grid" id="eg">
+    <div class="ecard on" data-e="UPSC"><div class="eicon">\ud83c\udfdb\ufe0f</div><div class="ename">UPSC CSE</div><div class="edesc">Prelims and Mains</div><div class="ebadge">Most Popular</div></div>
+    <div class="ecard" data-e="CA Inter"><div class="eicon">\ud83d\udcca</div><div class="ename">CA Inter</div><div class="edesc">All Papers</div><div class="ebadge">High Demand</div></div>
+    <div class="ecard" data-e="NEET"><div class="eicon">\ud83d\udd2c</div><div class="ename">NEET</div><div class="edesc">Bio Chem Physics</div><div class="ebadge">Exam Soon</div></div>
+    <div class="ecard" data-e="SSC CGL"><div class="eicon">\ud83d\udccb</div><div class="ename">SSC CGL</div><div class="edesc">All Sections</div><div class="ebadge">Trending</div></div>
+    <div class="ecard" data-e="JEE Mains"><div class="eicon">\u26a1</div><div class="ename">JEE Mains</div><div class="edesc">Physics Chem Maths</div><div class="ebadge">New</div></div>
+    <div class="ecard" data-e="Railway NTPC"><div class="eicon">\ud83d\ude82</div><div class="ename">Railway NTPC</div><div class="edesc">CBT 1 and 2</div><div class="ebadge">New</div></div>
+    <div class="ecard" data-e="IBPS PO"><div class="eicon">\ud83c\udfe6</div><div class="ename">IBPS PO</div><div class="edesc">All Sections</div><div class="ebadge">New</div></div>
+    <div class="ecard" data-e="CA Final"><div class="eicon">\ud83c\udfaf</div><div class="ename">CA Final</div><div class="edesc">All Groups</div><div class="ebadge">New</div></div>
+  </div>
+
+  <div class="ccard">
+    <div class="chdr">
+      <div class="ctitle" id="ctitle">Configure Your UPSC Mock Test</div>
+      <div class="csub">Personalise your test</div>
+    </div>
+    <div class="cbody">
+      <div class="crow">
+        <div><div class="clbl">Topic</div><select id="tsel"></select></div>
+        <div><div class="clbl">Difficulty</div>
+          <select id="dsel">
+            <option value="Easy">Easy</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Hard">Hard</option>
+            <option value="Mixed">Mixed</option>
+          </select>
+        </div>
+      </div>
+      <div class="crow">
+        <div><div class="clbl">Your Name</div><input type="text" id="uname" placeholder="Enter name"></div>
+        <div><div class="clbl">Email</div><input type="email" id="uemail" placeholder="your@email.com"></div>
+      </div>
+      <div class="clbl" style="margin-bottom:10px">Choose Package</div>
+      <div class="pgrid" id="pg">
+        <div class="pcard on" data-q="3" data-p="0" data-a="0"><div class="pname">Free Trial</div><div class="pprice">Free</div><div class="pold">&nbsp;</div><div class="pqs">3 Questions</div></div>
+        <div class="pcard hot" data-q="20" data-p="49" data-a="4900"><div class="pbadge">Popular</div><div class="pname">Standard</div><div class="pprice">Rs.49</div><div class="pold">Rs.149</div><div class="pqs">20 Questions</div></div>
+        <div class="pcard" data-q="50" data-p="99" data-a="9900"><div class="pname">Full Mock</div><div class="pprice">Rs.99</div><div class="pold">Rs.299</div><div class="pqs">50 Questions</div></div>
+        <div class="pcard" data-q="50" data-p="199" data-a="19900"><div class="pbadge" style="background:#9B59B6">Premium</div><div class="pname">Real Exam</div><div class="pprice">Rs.199</div><div class="pold">Rs.599</div><div class="pqs">50 Hardest PYQs</div></div>
+      </div>
+      <div class="clbl" style="margin-bottom:8px">Promo Code?</div>
+      <div class="prorow">
+        <input type="text" class="proinp" id="proi" placeholder="Enter promo code">
+        <button class="probtn" id="probtn">Apply</button>
+      </div>
+      <div class="promsg" id="promsg"></div>
+      <button class="sbtn" id="sbtn">Start Free Trial (3 Questions)</button>
+    </div>
+  </div>
+</div>
+
+<div class="tscreen" id="ts">
+  <div class="thdr">
+    <div class="tmeta">
+      <div class="ttitle" id="tlbl">Mock Test</div>
+      <div class="tbox" id="tdsp">25:00</div>
+    </div>
+    <div class="pbar"><div class="pfill" id="pfill" style="width:0%"></div></div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:#3A3A5A;margin-top:6px">
+      <span id="qctr">Q 1 of 20</span><span id="slive">Score: 0</span>
+    </div>
+  </div>
+  <div class="navgrid"><div class="navtitle">Navigator</div><div class="dots" id="dotsc"></div></div>
+  <div class="qcard">
+    <div class="qnum" id="qnum">Question 1</div>
+    <div class="qtxt" id="qtxt">Loading...</div>
+    <div class="opts" id="optsc"></div>
+    <div class="expbox" id="expb"><div class="exptitle">Explanation</div><div id="exptxt"></div></div>
+  </div>
+  <div class="qnav">
+    <button class="nbtn" id="prevb" disabled>Previous</button>
+    <button class="nbtn pri" id="nextb">Next</button>
+    <button class="nbtn dan" id="subb" style="display:none">Submit Test</button>
+  </div>
+</div>
+
+<div class="rscreen" id="rs">
+  <div class="rhero">
+    <div class="rscore" id="fscore">0</div>
+    <div class="rtotal" id="ftotal">out of 0</div>
+    <div class="rgrade" id="fgrade"></div>
+    <div class="rmsg" id="fmsg"></div>
+  </div>
+  <div class="rstats">
+    <div class="rcard"><div class="rnum g" id="rco">0</div><div class="rlbl">Correct</div></div>
+    <div class="rcard"><div class="rnum r" id="rwr">0</div><div class="rlbl">Wrong</div></div>
+    <div class="rcard"><div class="rnum b" id="rsk">0</div><div class="rlbl">Skipped</div></div>
+    <div class="rcard"><div class="rnum o" id="rpct">0%</div><div class="rlbl">Accuracy</div></div>
+  </div>
+  <div class="abtns">
+    <button class="abtn blue" id="revbtn">Review Answers</button>
+    <button class="abtn green" id="rtbtn">Take Another</button>
+    <button class="abtn out" id="shbtn">Share WhatsApp</button>
+  </div>
+  <div id="revsec" style="display:none">
+    <div style="font-size:13px;font-weight:500;color:#3A3A5A;text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px">Answer Review</div>
+    <div id="revcards"></div>
+  </div>
+</div>
+
+<div class="loverlay" id="lo">
+  <div class="spin"></div>
+  <div class="ltxt" id="ltxt">Generating Your Test</div>
+  <div class="lsub" id="lsub">Creating questions...</div>
+</div>
+
+<div class="mbg" id="modal">
+  <div class="mbox">
+    <div style="font-size:36px;margin-bottom:10px">&#10003;</div>
+    <h2 id="mtitle">Free Trial Done!</h2>
+    <p id="mbody">Unlock full test for complete assessment.</p>
+    <div class="mbtns"><button class="mbtn blue" id="mpbtn">Unlock Rs.49</button></div>
+    <button class="mbtn out" id="mcbtn" style="width:100%">Maybe Later</button>
+  </div>
+</div>
+
+<footer>MockTestBazaar - Made with love in India<br><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5e2d2b2e2e312c2a1e33313d352a3b2d2a3c3f243f3f2c703d3133">[email&#160;protected]</a> - 2026</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var RK='rzp_live_SZpXS845fLxMGd';
+var WK='https://rapid-forest-551a.aao-nirunikunja08.workers.dev';
+var TM={
+  'UPSC':['General Studies - Polity','General Studies - Economy','General Studies - History','General Studies - Geography','General Studies - Environment','General Studies - Science','Current Affairs','CSAT - Reasoning','CSAT - Maths'],
+  'CA Inter':['Accounting - Depreciation','Accounting - Partnership','Accounting - Company Accounts','Law - Companies Act','Taxation - Income Tax','Taxation - GST','Auditing Standards','Cost Accounting','Financial Management'],
+  'NEET':['Biology - Cell Biology','Biology - Genetics','Biology - Human Physiology','Biology - Plant Physiology','Biology - Ecology','Chemistry - Organic','Chemistry - Physical','Physics - Mechanics','Physics - Optics'],
+  'SSC CGL':['General Awareness - Polity','General Awareness - History','General Awareness - Geography','General Awareness - Economy','English - Grammar','Quantitative - Arithmetic','Reasoning - Verbal','Reasoning - Non-verbal'],
+  'JEE Mains':['Physics - Mechanics','Physics - Electrostatics','Chemistry - Organic','Chemistry - Physical','Mathematics - Calculus','Mathematics - Algebra'],
+  'Railway NTPC':['General Awareness','Mathematics','General Intelligence','Current Affairs'],
+  'IBPS PO':['Quantitative Aptitude','Reasoning Ability','English Language','General Awareness','Computer Knowledge'],
+  'CA Final':['Financial Reporting','SFM','Advanced Auditing','Corporate Law','Direct Tax','Indirect Tax']
+};
+var PC={
+  'UPSC':'You are an expert UPSC Prelims question setter with knowledge of 45 years of UPSC PYQs. Generate questions exactly like real UPSC Prelims - use Consider the following statements format, Which of the above is correct format, indirect questioning, tricky close options. Questions must feel like actual UPSC Prelims PYQs.',
+  'CA Inter':'You are an ICAI examiner. Generate MCQs exactly matching ICAI CA Inter pattern - practical scenarios, case studies, application of accounting standards, GST rules, income tax provisions. Use exact ICAI language and difficulty.',
+  'NEET':'You are a NEET question setter. Generate questions exactly matching NEET UG pattern - assertion reason, statement based, NCERT line based questions. Match exact NEET difficulty.',
+  'SSC CGL':'You are an SSC examiner. Generate MCQs exactly matching SSC CGL Tier 1 pattern - direct GK, English grammar, quick maths, reasoning. Match exact SSC CGL difficulty.',
+  'JEE Mains':'You are a JEE Mains question setter. Generate questions exactly matching JEE Mains pattern - conceptual, application based, matching JEE difficulty.',
+  'Railway NTPC':'You are an RRB NTPC examiner. Generate questions exactly matching RRB NTPC CBT pattern and difficulty.',
+  'IBPS PO':'You are an IBPS examiner. Generate questions exactly matching IBPS PO Prelims and Mains pattern.',
+  'CA Final':'You are an ICAI CA Final examiner. Generate MCQs matching CA Final advanced level with complex case studies.'
+};
+var ST={exam:'UPSC',topic:'General Studies - Polity',diff:'Medium',numQ:3,price:0,amt:0,free:true,name:'',email:'',qs:[],ans:{},cur:0,time:0,tmr:null};
+
+function updTopics(){
+  var ts=TM[ST.exam]||[];
+  var s=document.getElementById('tsel');
+  s.innerHTML='';
+  ts.forEach(function(t){var o=document.createElement('option');o.value=t;o.textContent=t;s.appendChild(o);});
+  ST.topic=ts[0]||'';
+}
+updTopics();
+
+document.getElementById('eg').onclick=function(e){
+  var c=e.target.closest('.ecard');
+  if(!c)return;
+  document.querySelectorAll('.ecard').forEach(function(x){x.classList.remove('on')});
+  c.classList.add('on');
+  ST.exam=c.getAttribute('data-e');
+  document.getElementById('ctitle').textContent='Configure Your '+ST.exam+' Mock Test';
+  updTopics();
+};
+
+document.getElementById('pg').onclick=function(e){
+  var c=e.target.closest('.pcard');
+  if(!c)return;
+  document.querySelectorAll('.pcard').forEach(function(x){x.classList.remove('on')});
+  c.classList.add('on');
+  ST.numQ=parseInt(c.getAttribute('data-q'));
+  ST.price=parseInt(c.getAttribute('data-p'));
+  ST.amt=parseInt(c.getAttribute('data-a'));
+  ST.free=ST.price===0;
+  var b=document.getElementById('sbtn');
+  b.style.background='';
+  b.textContent=ST.free?'Start Free Trial ('+ST.numQ+' Questions)':'Pay Rs.'+ST.price+' and Start ('+ST.numQ+' Questions)';
+};
+
+document.getElementById('probtn').onclick=function(){
+  var code=document.getElementById('proi').value.trim().toUpperCase();
+  var m=document.getElementById('promsg');
+  m.className='promsg';m.textContent='';
+  if(!code){m.className='promsg err';m.textContent='Please enter a promo code.';return;}
+  var valid={'AAYUSHI100':20,'NIRU100':20,'PAYAL100':20};
+  if(!valid[code]){m.className='promsg err';m.textContent='Invalid promo code.';return;}
+  if(code!=='NIRU100'){try{var u=JSON.parse(localStorage.getItem('mtbp')||'[]');if(u.indexOf(code)!==-1){m.className='promsg err';m.textContent='Already used on this device.';return;}u.push(code);localStorage.setItem('mtbp',JSON.stringify(u));}catch(e){}}
+  ST.numQ=valid[code];ST.price=0;ST.amt=0;ST.free=true;
+  document.querySelectorAll('.pcard').forEach(function(x){x.classList.remove('on')});
+  m.className='promsg ok';m.textContent='Code applied! '+valid[code]+' questions unlocked FREE!';
+  document.getElementById('proi').disabled=true;
+  document.getElementById('probtn').disabled=true;
+  var b=document.getElementById('sbtn');b.textContent='Start Free '+valid[code]+' Question Test';b.style.background='#1A7A3C';
+};
+
+document.getElementById('sbtn').onclick=function(){
+  ST.topic=document.getElementById('tsel').value;
+  ST.diff=document.getElementById('dsel').value;
+  ST.name=document.getElementById('uname').value.trim()||'Aspirant';
+  ST.email=document.getElementById('uemail').value.trim();
+  if(ST.free){genTest();return;}
+  if(!ST.email){alert('Please enter your email!');document.getElementById('uemail').focus();return;}
+  var o={key:RK,amount:ST.amt,currency:'INR',name:'MockTestBazaar',description:ST.exam+' Mock Test - '+ST.numQ+' Questions',prefill:{name:ST.name,email:ST.email},theme:{color:'#1A3AFF'},handler:function(){genTest();}};
+  var r=new Razorpay(o);r.on('payment.failed',function(){alert('Payment failed. Try again.');});r.open();
+};
+
+function genTest(){
+  var msg=ST.numQ>=50?'Generating '+ST.numQ+' questions - takes 1 to 3 minutes for large tests. Please wait...':'Creating '+ST.numQ+' questions...';
+  showL('Generating Your '+ST.exam+' Test',msg);
+  ST.qs=[];ST.ans={};ST.cur=0;
+  fetchBatch(0,[]);
+}
+
+function fetchBatch(done,all){
+  var remaining=ST.numQ-done;
+  if(remaining<=0){hideL();ST.qs=all;startTest();return;}
+  var batch=Math.min(20,remaining);
+  var seed=Math.floor(Math.random()*99999);
+  var ctx=PC[ST.exam]||('Expert question setter for '+ST.exam);
+  var p=ctx+' Generate exactly '+batch+' questions on "'+ST.topic+'" for '+ST.exam+'. Difficulty: '+ST.diff+'. Session: '+seed+'. Questions '+(done+1)+' to '+(done+batch)+'. Return ONLY a raw JSON array no other text: [{"q":"Question?","options":["A","B","C","D"],"correct":0,"explanation":"Why correct."}] Rules: correct is 0-3. Strictly follow '+ST.exam+' pattern. Varied formats. Plausible options. No emojis. ONLY JSON array.';
+  document.getElementById('lsub').textContent='Generating questions '+(done+1)+' to '+(done+batch)+' of '+ST.numQ+'...';
+  fetch(WK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:4000,messages:[{role:'user',content:p}]})})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    var newqs=[];
+    if(d&&d.content&&d.content[0]&&d.content[0].text){
+      var txt=d.content[0].text.trim().replace(/```json/g,'').replace(/```/g,'').trim();
+      var s=txt.indexOf('['),e=txt.lastIndexOf(']');
+      if(s!==-1&&e!==-1)txt=txt.substring(s,e+1);
+      try{newqs=JSON.parse(txt);if(!Array.isArray(newqs))newqs=[];}catch(err){newqs=[];}
+    }
+    var merged=all.concat(newqs);
+    if(merged.length>=ST.numQ){hideL();ST.qs=merged.slice(0,ST.numQ);startTest();}
+    else if(newqs.length===0&&merged.length>0){hideL();ST.qs=merged;startTest();}
+    else fetchBatch(merged.length,merged);
+  })
+  .catch(function(err){
+    if(all.length>0){hideL();ST.qs=all;startTest();}
+    else{hideL();alert('Connection error: '+err.message);}
+  });
+}
+
+function startTest(){
+  document.getElementById('hs').style.display='none';
+  document.getElementById('ts').style.display='block';
+  document.getElementById('rs').style.display='none';
+  document.getElementById('tlbl').textContent=ST.exam+' - '+ST.topic;
+  ST.time=ST.numQ*90;
+  startTmr();buildDots();showQ(0);
+}
+
+function buildDots(){
+  var d=document.getElementById('dotsc');d.innerHTML='';
+  for(var i=0;i<ST.qs.length;i++){
+    var dot=document.createElement('div');
+    dot.className='dot';dot.textContent=i+1;dot.setAttribute('data-i',i);
+    dot.onclick=function(){showQ(parseInt(this.getAttribute('data-i')));};
+    d.appendChild(dot);
+  }
+  updDots();
+}
+
+function updDots(){
+  document.querySelectorAll('.dot').forEach(function(d,i){
+    d.className='dot';
+    if(ST.ans[i]!==undefined)d.classList.add('ans');
+    if(i===ST.cur)d.classList.add('cur');
+  });
+}
+
+function showQ(idx){
+  ST.cur=idx;
+  var q=ST.qs[idx];var tot=ST.qs.length;
+  document.getElementById('qnum').textContent='Question '+(idx+1)+' of '+tot;
+  document.getElementById('qtxt').textContent=q.q;
+  document.getElementById('qctr').textContent='Q '+(idx+1)+' of '+tot;
+  document.getElementById('pfill').style.width=((idx+1)/tot*100)+'%';
+  var co=0;Object.keys(ST.ans).forEach(function(k){if(ST.ans[k]===ST.qs[k].correct)co++;});
+  document.getElementById('slive').textContent='Score: '+co;
+  var oc=document.getElementById('optsc');oc.innerHTML='';
+  var L=['A','B','C','D'];
+  q.options.forEach(function(opt,oi){
+    var div=document.createElement('div');
+    div.className='opt';
+    div.innerHTML='<div class="olet">'+L[oi]+'</div><span>'+opt+'</span>';
+    if(ST.ans[idx]!==undefined){
+      if(oi===q.correct)div.className='opt ok';
+      else if(oi===ST.ans[idx])div.className='opt no';
+    }
+    div.onclick=function(){if(ST.ans[idx]!==undefined)return;pickAns(idx,oi);};
+    oc.appendChild(div);
+  });
+  var eb=document.getElementById('expb');
+  if(ST.ans[idx]!==undefined){document.getElementById('exptxt').textContent=q.explanation||'';eb.classList.add('show');}
+  else eb.classList.remove('show');
+  document.getElementById('prevb').disabled=idx===0;
+  document.getElementById('nextb').style.display=idx===tot-1?'none':'block';
+  document.getElementById('subb').style.display=idx===tot-1?'block':'none';
+  updDots();
+}
+
+function pickAns(qi,oi){
+  ST.ans[qi]=oi;showQ(qi);
+  if(qi<ST.qs.length-1)setTimeout(function(){if(ST.cur===qi)showQ(qi+1);},1500);
+}
+
+function startTmr(){
+  clearInterval(ST.tmr);updTmr();
+  ST.tmr=setInterval(function(){ST.time--;updTmr();if(ST.time<=0){clearInterval(ST.tmr);submitTest();}},1000);
+}
+
+function updTmr(){
+  var m=Math.floor(ST.time/60),s=ST.time%60;
+  var el=document.getElementById('tdsp');
+  el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  el.className=ST.time<=60?'tbox warn':'tbox';
+}
+
+document.getElementById('prevb').onclick=function(){if(ST.cur>0)showQ(ST.cur-1);};
+document.getElementById('nextb').onclick=function(){if(ST.cur<ST.qs.length-1)showQ(ST.cur+1);};
+document.getElementById('subb').onclick=function(){
+  var un=ST.qs.length-Object.keys(ST.ans).length;
+  if(un>0&&!confirm(un+' unanswered. Submit?'))return;
+  submitTest();
+};
+
+function submitTest(){
+  clearInterval(ST.tmr);
+  var co=0,wr=0,sk=0;
+  for(var i=0;i<ST.qs.length;i++){
+    if(ST.ans[i]===undefined)sk++;
+    else if(ST.ans[i]===ST.qs[i].correct)co++;
+    else wr++;
+  }
+  var pct=Math.round(co/ST.qs.length*100);
+  var gr=pct>=80?'Excellent! Top Rank':pct>=60?'Good Performance':pct>=40?'Average - Keep Practicing':'Needs Improvement';
+  var mg=pct>=80?'You are ready!':pct>=60?'More practice needed.':pct>=40?'Focus on weak areas.':'Study more.';
+  if(ST.free&&ST.numQ===3){
+    document.getElementById('mtitle').textContent='Free Trial Done!';
+    document.getElementById('mbody').textContent='You scored '+co+'/3. Unlock full 20Q test for Rs.49!';
+    document.getElementById('modal').classList.add('show');
+  }
+  document.getElementById('ts').style.display='none';
+  document.getElementById('rs').style.display='block';
+  document.getElementById('fscore').textContent=co;
+  document.getElementById('ftotal').textContent='out of '+ST.qs.length;
+  document.getElementById('fgrade').textContent=gr;
+  document.getElementById('fmsg').textContent=mg;
+  document.getElementById('rco').textContent=co;
+  document.getElementById('rwr').textContent=wr;
+  document.getElementById('rsk').textContent=sk;
+  document.getElementById('rpct').textContent=pct+'%';
+}
+
+document.getElementById('mpbtn').onclick=function(){
+  document.getElementById('modal').classList.remove('show');
+  ST.numQ=20;ST.price=49;ST.amt=4900;ST.free=false;
+  if(!ST.email)ST.email=prompt('Enter email:')||'';
+  var o={key:RK,amount:4900,currency:'INR',name:'MockTestBazaar',description:'20Q Test',prefill:{name:ST.name,email:ST.email},theme:{color:'#1A3AFF'},handler:function(){genTest();}};
+  var r=new Razorpay(o);r.on('payment.failed',function(){alert('Failed. Try again.');});r.open();
+};
+document.getElementById('mcbtn').onclick=function(){document.getElementById('modal').classList.remove('show');};
+
+document.getElementById('revbtn').onclick=function(){
+  var s=document.getElementById('revsec');
+  if(s.style.display==='none'){s.style.display='block';buildRev();this.textContent='Hide Review';}
+  else{s.style.display='none';this.textContent='Review Answers';}
+};
+
+function buildRev(){
+  var c=document.getElementById('revcards');c.innerHTML='';
+  var L=['A','B','C','D'];
+  ST.qs.forEach(function(q,i){
+    var ua=ST.ans[i];var isC=ua===q.correct,isS=ua===undefined;
+    var card=document.createElement('div');card.className='revcard';
+    var col=isS?'#1A3AFF':isC?'#1A7A3C':'#C0392B';
+    var st=isS?'Skipped':isC?'Correct':'Wrong';
+    card.innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:12px;color:#3A3A5A">Q'+(i+1)+'</span><span style="font-size:12px;font-weight:600;color:'+col+'">'+st+'</span></div><div class="revq">'+q.q+'</div>';
+    q.options.forEach(function(opt,oi){
+      var cls='revopt ';
+      if(oi===q.correct)cls+='ok';else if(oi===ua)cls+='no';else cls+='neu';
+      card.innerHTML+='<div class="'+cls+'">'+L[oi]+'. '+opt+(oi===q.correct?' (Correct)':'')+'</div>';
+    });
+    if(q.explanation)card.innerHTML+='<div class="revexp"><strong>Explanation:</strong> '+q.explanation+'</div>';
+    c.appendChild(card);
+  });
+}
+
+document.getElementById('rtbtn').onclick=function(){
+  document.getElementById('rs').style.display='none';
+  document.getElementById('hs').style.display='block';
+  document.getElementById('revsec').style.display='none';
+  document.getElementById('revbtn').textContent='Review Answers';
+};
+
+document.getElementById('shbtn').onclick=function(){
+  var co=parseInt(document.getElementById('rco').textContent);
+  var pct=document.getElementById('rpct').textContent;
+  window.open('https://wa.me/?text='+encodeURIComponent('I scored '+co+'/'+ST.qs.length+' ('+pct+') on '+ST.exam+' mock test!\nFree test: mocktestbazaar.com'),'_blank');
+};
+
+function showL(t,s){document.getElementById('ltxt').textCo
